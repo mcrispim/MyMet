@@ -1,6 +1,11 @@
 package com.example.mymet.model
 
+import androidx.lifecycle.viewModelScope
 import com.google.gson.annotations.SerializedName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -19,7 +24,7 @@ interface ObjectApi {
 //    fun listRepos(@Path("user") user: String?): Call<List<Repo?>?>?
 
     @GET("objects")
-    fun fetchObjectIds(): Response<ObjectIdList>
+    suspend fun fetchObjectIds(): ObjectIdList
 }
 
 class ObjectService {
@@ -29,6 +34,17 @@ class ObjectService {
         .build()
         .create(ObjectApi::class.java)
 
-    suspend fun fetchObjectIds(): Response<ObjectIdList> = api.fetchObjectIds()
+    suspend fun fetchObjectIds(): ObjectIdList {
+        CoroutineScope.launch(Dispatchers.IO) {
+            val res = service.fetchObjectIds()
+
+            if (res.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    objectIds = res.body()!!
+                }
+            }
+        }
+
+    } = api.fetchObjectIds()
 }
 

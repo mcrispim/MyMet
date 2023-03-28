@@ -38,7 +38,6 @@ android {
 
 
 dependencies {
-    implementation 'androidx.core:core-ktx:+'
     def retrofitVersion = '2.9.0'
     def coroutinesVersion = "1.6.1"
     def lifecycleVersion = "2.6.1"
