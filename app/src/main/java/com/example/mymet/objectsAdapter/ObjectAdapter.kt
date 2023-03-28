@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mymet.R
-import com.example.mymet.model.MuseumObject
-import com.example.mymet.model.myObjects
+import com.example.mymet.data.model.MuseumObject
+import com.example.mymet.data.model.myObjects
 
 class ObjectAdapter(private val objects: MutableList<MuseumObject> = myObjects) :
     RecyclerView.Adapter<ObjectAdapter.ObjectViewHolder>() {

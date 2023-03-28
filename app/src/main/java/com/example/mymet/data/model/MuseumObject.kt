@@ -1,4 +1,4 @@
-package com.example.mymet.model
+package com.example.mymet.data.model
 
 data class MuseumObject(
     val objectID: Int,
