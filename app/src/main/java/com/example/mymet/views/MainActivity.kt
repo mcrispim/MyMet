@@ -15,7 +15,8 @@ class MainActivity : AppCompatActivity() {
     //private lateinit var museumObjectViewModel: MuseumObjectViewModel
     private lateinit var adapter: ObjectAdapter
 
-    val museumObjectList = Application.museumObjectRepository.getObjects(NUMBER_OF_OBJECTS)
+    val museumObjectList = Application.
+        //.museumObjectRepository.getObjects(NUMBER_OF_OBJECTS)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

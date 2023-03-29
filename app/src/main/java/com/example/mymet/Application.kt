@@ -6,7 +6,7 @@ import com.example.mymet.network.ObjectService
 import com.example.mymet.db.ObjectDatabase
 import com.example.mymet.repository.MuseumObjectRepository
 
-object Application: Application() {
+class Application: Application() {
     lateinit var museumObjectRepository: MuseumObjectRepository
 
     override fun onCreate() {
