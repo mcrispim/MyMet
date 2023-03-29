@@ -1,19 +1,29 @@
-package com.example.mymet.data.repository
+package com.example.mymet.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.example.mymet.data.model.ObjectIdList
+import com.example.mymet.models.MuseumObjectIdList
 import com.example.mymet.data.model.ObjectService
+import com.example.mymet.db.ObjectDatabase
+import com.example.mymet.models.MuseumObject
 
-class ObjectRepository (private val service: ObjectService) {
-    private val _objectIds = MutableLiveData<ObjectIdList>()
-    val objectIds: LiveData<ObjectIdList>
-        get() = _objectIds
+class MuseumObjectRepository(
+    private val database: ObjectDatabase,
+    private val service: ObjectService,
+) {
+    lateinit var objectIdList: MuseumObjectIdList
+    lateinit var nObjects: List<MuseumObject>
 
     suspend fun getObjectIds() {
         val resObjectIds = service.getObjectIds()
         if (resObjectIds.body() != null) {
-            _objectIds.postValue(resObjectIds.body())
+            objectIdList = resObjectIds.body()!!
+        }
+    }
+
+    suspend fun getObjects(n: Int): List<MuseumObject> {
+        val ids = List<MuseumObject>(n) {
+            val id = objectIdList.objectIds.random()
+            val resObjectById = service.getObjectById(id)
+
         }
     }
 

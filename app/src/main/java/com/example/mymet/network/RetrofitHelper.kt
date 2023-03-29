@@ -1,7 +1,6 @@
-package com.example.mymet.data.api
+package com.example.mymet.network
 
 import android.content.Context
-import com.example.mymet.data.model.ObjectService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

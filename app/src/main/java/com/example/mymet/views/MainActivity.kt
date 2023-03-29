@@ -1,38 +1,34 @@
-package com.example.mymet
+package com.example.mymet.views
 
-import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mymet.data.model.ObjectService
 import com.example.mymet.databinding.ActivityMainBinding
-import com.example.mymet.data.model.ObjectViewModel
-import com.example.mymet.data.model.ViewModelFactory
-import com.example.mymet.data.model.myObjects
+import com.example.mymet.viewmodel.MuseumObjectViewModel
+import com.example.mymet.models.ViewModelFactory
 import com.example.mymet.objectsAdapter.ObjectAdapter
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var objectViewModel: ObjectViewModel
+    private lateinit var museumObjectViewModel: MuseumObjectViewModel
     private lateinit var adapter: ObjectAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.rvObjects.layoutManager = LinearLayoutManager(applicationContext)
 
-        val objectRepository = (application as Application).objectsRepository
-        objectViewModel = ViewModelProvider(this, ViewModelFactory(objectRepository))[ObjectViewModel::class.java]
+        val museumObjectRepository = (application as com.example.mymet.Application).museumObjectRepository
+        museumObjectViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(museumObjectRepository)
+        )[MuseumObjectViewModel::class.java]
 
-
-        objectViewModel.objectIds.observe(this) { charList ->
+        museumObjectViewModel.objectIds.observe(this) { charList ->
             charList.let { charList ->
                 adapter = CharAdapter(this, charList,
                     CharAdapter.OnClickListener { char ->
