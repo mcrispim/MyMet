@@ -1,4 +1,4 @@
-package com.example.mymet.data.model
+package com.example.mymet.network
 
 import com.example.mymet.models.MuseumObject
 import com.example.mymet.models.MuseumObjectIdList

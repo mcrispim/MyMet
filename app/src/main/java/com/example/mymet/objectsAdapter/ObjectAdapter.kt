@@ -9,7 +9,7 @@ import com.example.mymet.R
 import com.example.mymet.models.MuseumObject
 import com.example.mymet.models.myObjects
 
-class ObjectAdapter(private val objects: MutableList<MuseumObject> = myObjects) :
+class ObjectAdapter(private val objects: List<MuseumObject> = myObjects) :
     RecyclerView.Adapter<ObjectAdapter.ObjectViewHolder>() {
 
     class ObjectViewHolder(val view: View) : RecyclerView.ViewHolder(view) {

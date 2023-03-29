@@ -1,32 +1,49 @@
 package com.example.mymet.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.mymet.models.MuseumObjectIdList
-import com.example.mymet.data.model.ObjectService
 import com.example.mymet.db.ObjectDatabase
 import com.example.mymet.models.MuseumObject
+import com.example.mymet.network.ObjectService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
+import retrofit2.Response
 
 class MuseumObjectRepository(
     private val database: ObjectDatabase,
     private val service: ObjectService,
 ) {
     lateinit var objectIdList: MuseumObjectIdList
-    lateinit var nObjects: List<MuseumObject>
+//
+//    val museumObjects = LiveData<List<MuseumObject>>()
+//        get() = _museumObjects
 
-    suspend fun getObjectIds() {
-        val resObjectIds = service.getObjectIds()
-        if (resObjectIds.body() != null) {
-            objectIdList = resObjectIds.body()!!
+    fun getObjectIds() {
+        var resObjectIds: Response<MuseumObjectIdList>
+        CoroutineScope(IO).launch {
+            resObjectIds = service.getObjectIds()
+            if (resObjectIds.body() != null) {
+                objectIdList = resObjectIds.body()!!
+            }
         }
+
     }
 
-    suspend fun getObjects(n: Int): List<MuseumObject> {
-        val ids = List<MuseumObject>(n) {
+    fun getObjects(n: Int): List<MuseumObject> {
+        val objects = mutableListOf<MuseumObject>()
+        while (objects.size < n) {
             val id = objectIdList.objectIds.random()
-            val resObjectById = service.getObjectById(id)
-
+            CoroutineScope(IO).launch {
+                val resObjectById = service.getObjectById(id)
+                if (resObjectById.body() != null) {
+                    objects.add(resObjectById.body()!!)
+                }
+            }
         }
+        return objects.toList()
     }
-
 }
 
 
